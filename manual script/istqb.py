@@ -105,6 +105,7 @@ def load_question_and_answers():
     import pickle
     path = get_path()
     question_and_answer_path = path + 'qa.dat'
+    json_question_and_answer_path = path + 'questions.json'
 
     mapped_question_and_answer = []
     if not os.path.exists(question_and_answer_path):
@@ -132,6 +133,12 @@ def load_question_and_answers():
     for q, a in mapped_question_and_answer:
         assert len(q) > 0, past_q
         past_q = q
+
+    import json
+    questions = [{"question": q, "answer": a} for q, a in mapped_question_and_answer]
+    with open(json_question_and_answer_path, "w") as f:
+        f.write(json.dumps(questions))
+
     return mapped_question_and_answer
 
 
